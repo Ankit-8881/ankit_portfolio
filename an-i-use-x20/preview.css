@@ -1,0 +1,69 @@
+/* Static certificate images avoid browser PDF toolbars while retaining a clear preview. */
+.certificate-preview {
+  min-height: 0;
+  background: transparent;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25), 0 0 22px rgba(139, 123, 255, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.certificate-preview::after { display: none; }
+
+.certificate-preview img {
+  display: block;
+  width: 100%;
+  height: 270px;
+  object-fit: contain;
+  object-position: top center;
+}
+
+.certificate-preview .preview-button {
+  position: absolute;
+  right: 50%;
+  bottom: 16px;
+  z-index: 1;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background: rgba(11, 16, 32, 0.88);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-decoration: none;
+  transform: translate(50%, 8px);
+  opacity: 0;
+  transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.certificate-preview:hover .preview-button,
+.certificate-preview:focus-within .preview-button {
+  transform: translate(50%, 0);
+  opacity: 1;
+}
+
+/* Touch screens have no hover state, so keep the same control available there. */
+@media (pointer: coarse) {
+  .certificate-preview .preview-button {
+    transform: translate(50%, 0);
+    opacity: 1;
+  }
+}
+
+.preview-button:hover,
+.preview-button:focus-visible {
+  background: var(--accent);
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}
+
+.experience-card:hover .certificate-preview {
+  transform: translateY(-4px);
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 0 32px rgba(139, 123, 255, 0.36);
+}
+
+@media (max-width: 760px) {
+  .certificate-preview img { height: 230px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .certificate-preview, .certificate-preview .preview-button { transition: none; }
+}
