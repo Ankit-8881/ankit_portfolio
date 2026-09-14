@@ -19,7 +19,7 @@ const portfolioData = {
       school: "St. Xavier's School",
       univ: "Affiliated to: Indian School Certificate Examinations (ICSE)",
       detail: "Intermediate in Science · 82.5%",
-      duration: "May 2021",
+      duration: "",//"May 2021",
       place: "📍Bokaro Steel City, Jharkhand",
       // Add a photo of the school here later, same pattern as the project thumbnails.
       photo: "assets/st.xav_bok.jpg"
