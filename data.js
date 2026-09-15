@@ -26,6 +26,21 @@ const portfolioData = {
     }
     
   ],
+
+    internships: [
+    {
+      title: "AWS Cloud Trainee",
+      organization: "EduSkills · AICTE",
+      duration: "October 2025 – December 2025",
+      description: "AWS Cloud training completed through the EduSkills AICTE Internship."
+    },
+    {
+      title: "Power BI Intern",
+      organization: "Microsoft Elevate · AICTE",
+      duration: "December 2025 – January 2026",
+      description: "Power BI internship completed through the Microsoft Elevate and AICTE program."
+    }
+  ],
   // Each course gets a short blurb plus a large background "watermark" icon (emoji is
   // fine — swap for an SVG later if you want something sharper) shown faded behind the text.
   coursework: [

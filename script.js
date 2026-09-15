@@ -75,12 +75,128 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) new Intersec
 else document.querySelectorAll(".reveal").forEach(el => el.classList.add("visible"));
 
 // Local chatbot: predictable, free, and private. Its facts come only from data.js.
-const launcher = $(".chat-launcher"), panel = $("#chat-panel"), closeChat = $(".chat-close"), messages = $("#chat-messages"), chatForm = $("#chat-form"), chatInput = $("#chat-input");
-function addMessage(text, sender) { const bubble = document.createElement("p"); bubble.className = `message ${sender}`; bubble.textContent = text; messages.append(bubble); messages.scrollTop = messages.scrollHeight; }
-function toggleChat(open) { panel.classList.toggle("open", open); panel.setAttribute("aria-hidden", !open); launcher.setAttribute("aria-expanded", open); if (open) { if (!messages.children.length) addMessage(`Hi! I’m ${portfolioData.name}'s portfolio assistant. Ask about skills, projects, education, or how to get in touch.`, "bot"); chatInput.focus(); } }
-launcher.addEventListener("click", () => toggleChat(!panel.classList.contains("open"))); closeChat.addEventListener("click", () => toggleChat(false));
-function answer(question) { const q = question.toLowerCase(); if (/skill|tech|stack|language/.test(q)) return `${portfolioData.name}'s core skills include ${portfolioData.skills.flatMap(s => s[1].split(", ")).join(", ")}.`; if (/project|work|build/.test(q)) return `Featured projects include ${portfolioData.projects.map(p => p.title).join(", ")}. The projects section includes their technologies and impact.`; if (/education|college|degree|study|cgpa/.test(q)) return `${portfolioData.name}'s education: ${portfolioData.education}.`; if (/experience|intern|training|aws|power bi/.test(q)) return `Ankit completed AWS Cloud training through the EduSkills AICTE Internship (Oct–Dec 2025) and a Power BI internship with Microsoft Elevate and AICTE (Dec 2025–Jan 2026).`; if (/certification|certificate|course|badge/.test(q)) return `${portfolioData.name}'s certifications include ${portfolioData.certifications.map(c => c.title).join("; ")}.`; if (/achievement|award|competition/.test(q)) return portfolioData.achievements.join(" "); if (/location|live|based/.test(q)) return `${portfolioData.name} is based in ${portfolioData.location}.`; if (/contact|email|hire|reach/.test(q)) return `You can write to ${portfolioData.email}, call ${portfolioData.phone}, or use the contact form below.`; if (/who|name|about/.test(q)) return `${portfolioData.name} is a ${portfolioData.role} who builds data-driven software and enjoys problem solving.`; return `I can help with Ankit's skills, projects, education, training, achievement, location, or contact details. Try asking one of those!`; }
-chatForm.addEventListener("submit", event => { event.preventDefault(); const question = chatInput.value.trim(); if (!question) return; addMessage(question, "user"); chatInput.value = ""; setTimeout(() => addMessage(answer(question), "bot"), 250); });
+// const launcher = $(".chat-launcher"), panel = $("#chat-panel"), closeChat = $(".chat-close"), messages = $("#chat-messages"), chatForm = $("#chat-form"), chatInput = $("#chat-input");
+// function addMessage(text, sender) { const bubble = document.createElement("p"); bubble.className = `message ${sender}`; bubble.textContent = text; messages.append(bubble); messages.scrollTop = messages.scrollHeight; }
+// function toggleChat(open) { panel.classList.toggle("open", open); panel.setAttribute("aria-hidden", !open); launcher.setAttribute("aria-expanded", open); if (open) { if (!messages.children.length) addMessage(`Hi! I’m ${portfolioData.name}'s portfolio assistant. Ask about skills, projects, education, or how to get in touch.`, "bot"); chatInput.focus(); } }
+// launcher.addEventListener("click", () => toggleChat(!panel.classList.contains("open"))); closeChat.addEventListener("click", () => toggleChat(false));
+// function answer(question) { const q = question.toLowerCase(); if (/skill|tech|stack|language/.test(q)) return `${portfolioData.name}'s core skills include ${portfolioData.skills.flatMap(s => s[1].split(", ")).join(", ")}.`; if (/project|work|build/.test(q)) return `Featured projects include ${portfolioData.projects.map(p => p.title).join(", ")}. The projects section includes their technologies and impact.`; if (/education|college|degree|study|cgpa/.test(q)) return `${portfolioData.name}'s education: ${portfolioData.education}.`; if (/experience|intern|training|aws|power bi/.test(q)) return `Ankit completed AWS Cloud training through the EduSkills AICTE Internship (Oct–Dec 2025) and a Power BI internship with Microsoft Elevate and AICTE (Dec 2025–Jan 2026).`; if (/certification|certificate|course|badge/.test(q)) return `${portfolioData.name}'s certifications include ${portfolioData.certifications.map(c => c.title).join("; ")}.`; if (/achievement|award|competition/.test(q)) return portfolioData.achievements.join(" "); if (/location|live|based/.test(q)) return `${portfolioData.name} is based in ${portfolioData.location}.`; if (/contact|email|hire|reach/.test(q)) return `You can write to ${portfolioData.email}, call ${portfolioData.phone}, or use the contact form below.`; if (/who|name|about/.test(q)) return `${portfolioData.name} is a ${portfolioData.role} who builds data-driven software and enjoys problem solving.`; return `I can help with Ankit's skills, projects, education, training, achievement, location, or contact details. Try asking one of those!`; }
+// chatForm.addEventListener("submit", event => { event.preventDefault(); const question = chatInput.value.trim(); if (!question) return; addMessage(question, "user"); chatInput.value = ""; setTimeout(() => addMessage(answer(question), "bot"), 250); });
 
-// Formspree handles delivery without putting email credentials in public browser code.
-$("#contact-form").addEventListener("submit", event => { if (event.currentTarget.action.includes("YOUR_FORM_ID")) { event.preventDefault(); $("#form-note").textContent = "Add your Formspree form ID in index.html to activate sending."; } });
+// // Formspree handles delivery without putting email credentials in public browser code.
+// $("#contact-form").addEventListener("submit", event => { if (event.currentTarget.action.includes("YOUR_FORM_ID")) { event.preventDefault(); $("#form-note").textContent = "Add your Formspree form ID in index.html to activate sending."; } });
+
+// AI CHATBOT
+const launcher = $(".chat-launcher");
+const panel = $("#chat-panel");
+const closeChat = $(".chat-close");
+const messages = $("#chat-messages");
+const chatForm = $("#chat-form");
+const chatInput = $("#chat-input");
+
+// Stores the conversation during the current page session
+let chatHistory = [];
+
+function addMessage(text, sender) {
+    const bubble = document.createElement("p");
+
+    bubble.className = `message ${sender}`;
+    bubble.textContent = text;
+
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+
+    return bubble;
+}
+
+function toggleChat(open) {
+    panel.classList.toggle("open", open);
+    panel.setAttribute("aria-hidden", String(!open));
+    launcher.setAttribute("aria-expanded", String(open));
+
+    if (open) {
+        if (!messages.children.length) {
+            addMessage(
+                `Hi! I'm ${portfolioData.name}'s AI portfolio assistant. Ask me about my skills, projects, education, internships, certifications, or anything else about my portfolio.`,
+                "bot"
+            );
+        }
+
+        chatInput.focus();
+    }
+}
+
+launcher.addEventListener("click", () => {
+    toggleChat(!panel.classList.contains("open"));
+});
+
+closeChat.addEventListener("click", () => {
+    toggleChat(false);
+});
+
+chatForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const question = chatInput.value.trim();
+
+    if (!question) return;
+
+    // Show user's message
+    addMessage(question, "user");
+
+    // Clear input
+    chatInput.value = "";
+
+    // Show temporary thinking message
+    const thinkingBubble = addMessage("Thinking...", "bot");
+
+    try {
+        const response = await fetch("http://localhost:5000/api/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: question,
+
+                // Send recent conversation history
+                history: chatHistory,
+
+                // Send the complete portfolio data
+                portfolio: portfolioData
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Something went wrong");
+        }
+
+        // Replace "Thinking..." with Gemini's response
+        thinkingBubble.textContent = data.reply;
+
+        // Save conversation for follow-up questions
+        chatHistory.push({
+            role: "user",
+            text: question
+        });
+
+        chatHistory.push({
+            role: "model",
+            text: data.reply
+        });
+
+        // Keep only the latest 10 messages
+        if (chatHistory.length > 10) {
+            chatHistory = chatHistory.slice(-10);
+        }
+
+    } catch (error) {
+        console.error("Chatbot error:", error);
+
+        thinkingBubble.textContent =
+            "Sorry, I'm having trouble connecting to my AI right now.";
+    }
+
+    messages.scrollTop = messages.scrollHeight;
+});
