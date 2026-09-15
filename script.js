@@ -150,7 +150,7 @@ chatForm.addEventListener("submit", async (event) => {
     const thinkingBubble = addMessage("Thinking...", "bot");
 
     try {
-        const response = await fetch("https://ankit-portfolio-6akt-bj50ofaot-ankit-e6e2.vercel.app/chat", {
+        const response = await fetch("https://ankit-portfolio-6akt.vercel.app/api/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
