@@ -205,7 +205,7 @@ h1 em {
     border-radius:50%;
     background:radial-gradient(circle,#9e91ff 0 8%,transparent 9%);
     background-size:25px 25px;
-    opacity:.3;
+    opacity:0.1;
 }
 .portrait-placeholder span {
     font-size:5rem;
