@@ -1,5 +1,21 @@
 const $ = (selector) => document.querySelector(selector);
 
+// Cinematic alphabet logo intro. No image assets are used.
+document.documentElement.classList.add("intro-active");
+const introOverlay = document.getElementById("intro-overlay");
+
+if (introOverlay) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    introOverlay.remove();
+    document.documentElement.classList.remove("intro-active");
+  } else {
+    window.setTimeout(() => {
+      introOverlay.remove();
+      document.documentElement.classList.remove("intro-active");
+    }, 2420);
+  }
+}
+
 // Render repeatable content from data.js, so content and presentation stay separate.
 $("#skills-grid").innerHTML = portfolioData.skills.map(([title, tools], index) => `<article class="skill-card"><span>0${index + 1}</span><h3>${title}</h3><p>${tools}</p></article>`).join("");
 

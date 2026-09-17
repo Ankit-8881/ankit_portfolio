@@ -15,6 +15,10 @@
 html {
     scroll-behavior:smooth;
 }
+html.intro-active,
+html.intro-active body {
+    overflow:hidden;
+}
 body {
     margin:0;
     background:var(--bg);
@@ -63,16 +67,265 @@ body {
     align-items:center;
     justify-content:space-between;
 }
+
+/* =========================
+   NORMAL HEADER LOGO
+   ========================= */
+
 .brand {
-    font-size:1.45rem;
-    font-weight:800;
-    text-decoration:none;
-    color:var(--text);
-    letter-spacing:-.08em;
+    display: inline-block;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    color: var(--text);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
 }
-.brand span {
+
+.brand .brand-i {
+    color: #42fe0e;
+    margin-left: 0.1em;
+}
+
+.brand .brand-dot {
+    color: #42fe0e;
+}
+.brand > span { color:var(--text); }
+
+/* =========================================================
+   CINEMATIC LOGO INTRO — ALPHABET VERSION
+   No logo images are used here. The wordmark is built from text
+   so every character stays crisp at every screen size.
+   ========================================================= */
+html.intro-active,
+html.intro-active body {
+    overflow:hidden;
+}
+
+.intro-overlay {
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    background:#0b1020;
+    isolation:isolate;
+}
+
+.intro-logo {
+    position:relative;
+    display:flex;
+    align-items:baseline;
+    justify-content:center;
+    width:max-content;
+    color:#f4f6fb;
+    font-family:'Manrope',Arial,sans-serif;
+    font-size:clamp(3.2rem,9vw,7rem);
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-0.075em;
+    white-space:nowrap;
+    transform:translateZ(0);
+}
+
+.intro-char,
+.intro-i,
+.intro-period {
+    display:inline-block;
+    opacity:0;
+    transform:translate3d(0,16px,0) scale(.96);
+    animation:intro-char-in .42s cubic-bezier(.22,1,.36,1) forwards;
+    will-change:transform,opacity;
+}
+
+.intro-a { animation-delay:.08s; }
+.intro-n { animation-delay:.16s; }
+.intro-k { animation-delay:.24s; }
+.intro-i { animation-delay:.32s; }
+.intro-t { animation-delay:.40s; }
+.intro-period { animation-delay:.48s; color:#42fe0e; }
+
+@keyframes intro-char-in {
+    0% {
+        opacity:0;
+        transform:translate3d(0,16px,0) scale(.96);
+    }
+    65% { opacity:1; }
+    100% {
+        opacity:1;
+        transform:translate3d(0,0,0) scale(1);
+    }
+}
+
+/* The I is dotless text + a separate square dot. This keeps the dot aligned
+   independently while the stem remains a real alphabetic character. */
+.intro-i {
+    position:relative;
+    width:.43em;
+    height:1em;
+    margin-left:.005em;
+    margin-right:.005em;
     color:#42fe0e;
 }
+
+.intro-i-stem {
+    position:absolute;
+    left:50%;
+    bottom:0;
+    width:.18em;
+    height:.68em;
+    display:block;
+    transform:translateX(-50%);
+    border-radius:.018em;
+    background:#42fe0e;
+    transform-origin:center bottom;
+}
+
+.intro-i-dot {
+    position:absolute;
+    left:50%;
+    top:.015em;
+    width:.18em;
+    height:.18em;
+    border-radius:.018em;
+    background:#42fe0e;
+    transform:translateX(-50%) scale(0);
+    opacity:0;
+    box-shadow:0 0 0 rgba(66,254,14,0);
+    animation:intro-i-dot-in .34s cubic-bezier(.22,1,.36,1) .67s forwards,
+              intro-i-dot-pulse .32s ease 1.02s forwards;
+    z-index:3;
+}
+
+@keyframes intro-i-dot-in {
+    0% {
+        opacity:0;
+        transform:translateX(-50%) scale(.2);
+    }
+    75% {
+        opacity:1;
+        transform:translateX(-50%) scale(1.12);
+    }
+    100% {
+        opacity:1;
+        transform:translateX(-50%) scale(1);
+    }
+}
+
+@keyframes intro-i-dot-pulse {
+    0% { transform:translateX(-50%) scale(1); box-shadow:0 0 0 rgba(66,254,14,0); }
+    45% { transform:translateX(-50%) scale(1.22); box-shadow:0 0 22px rgba(66,254,14,.55); }
+    100% { transform:translateX(-50%) scale(1); box-shadow:0 0 9px rgba(66,254,14,.22); }
+}
+
+/* The transition circle is anchored to the exact center of the I dot.
+   It is a CSS circle, not an image. */
+.intro-transition-dot {
+    position:absolute;
+    left:50%;
+    top:.105em;
+    width:.18em;
+    height:.18em;
+    border-radius:50%;
+    background:#42fe0e;
+    opacity:0;
+    transform:translate(-50%,-50%) scale(0);
+    transform-origin:center;
+    z-index:20;
+    pointer-events:none;
+    box-shadow:0 0 18px rgba(66,254,14,.35);
+    animation:intro-transition .78s cubic-bezier(.76,0,.18,1) 1.36s forwards;
+    will-change:transform,opacity;
+}
+
+@keyframes intro-transition {
+    0% {
+        opacity:0;
+        transform:translate(-50%,-50%) scale(0);
+        box-shadow:0 0 18px rgba(66,254,14,.35);
+    }
+    10% {
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1.35);
+        box-shadow:0 0 42px rgba(66,254,14,.65);
+    }
+    100% {
+        opacity:1;
+        transform:translate(-50%,-50%) scale(700);
+        box-shadow:0 0 0 rgba(66,254,14,0);
+    }
+}
+
+/* The expanding dot becomes the final transition layer. */
+.intro-overlay {
+    animation:intro-overlay-out .28s ease 2.10s forwards;
+}
+
+@keyframes intro-overlay-out {
+    from { opacity:1; visibility:visible; }
+    to { opacity:0; visibility:hidden; pointer-events:none; }
+}
+
+/* Navbar wordmark — same alphabet construction, no PNG. */
+.brand {
+    display:inline-flex;
+    align-items:baseline;
+    color:var(--text);
+    text-decoration:none;
+    font-family:'Manrope',Arial,sans-serif;
+    font-size:1.45rem;
+    font-weight:800;
+    letter-spacing:-.075em;
+    line-height:1;
+}
+
+.brand-i {
+    position:relative;
+    display:inline-block;
+    width:.43em;
+    height:1em;
+    margin:0 .005em;
+    color:#42fe0e;
+}
+
+.brand-i-stem {
+    position:absolute;
+    left:50%;
+    bottom:0;
+    width:.18em;
+    height:.68em;
+    display:block;
+    transform:translateX(-50%);
+    border-radius:.018em;
+    background:#42fe0e;
+    transform-origin:center bottom;
+}
+
+.brand-i-dot {
+    position:absolute;
+    left:50%;
+    top:.015em;
+    width:.18em;
+    height:.18em;
+    border-radius:.018em;
+    background:#42fe0e;
+    transform:translateX(-50%);
+}
+
+.brand-period { color:#42fe0e; }
+
+@media (max-width:600px) {
+    .intro-logo {
+        font-size:clamp(2.8rem,16vw,5rem);
+    }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    .intro-overlay { display:none; }
+}
+
 .nav-links {
     display:flex;
     align-items:center;
