@@ -69,14 +69,14 @@ const portfolioData = {
       date: "November 2024",
       description: "A web app that extracts and cross-verifies user-entered details—like name, date of birth, and parents' names—against identity and academic documents, using OCR and fuzzy matching to automate checks that used to be manual.",
       stack: ["Python", "Tesseract OCR", "spaCy", "Pandas", "NumPy"],
-      github: "https://github.com/Ankit-8881",
-      live: "#",
+      github: "https://github.com/Ankit-8881/Data-Verification-System",
+      live: "https://github.com/Ankit-8881/Data-Verification-System",
       thumbnail: "assets/ADVS.png",
       // Shown as a hoverable badge on the project card, with the certificate as proof.
       award: {
         label: "3rd Position – College Project Competition",
-        image: "assets/awards/3rd-position-certificate.png",
-        link: "assets/awards/3rd-position-certificate.pdf"
+        image: "assets/3rd_prize.jpg",
+        link: "assets/3rd_prize.jpg"
       },
       color: "violet"
     },
@@ -87,8 +87,8 @@ const portfolioData = {
       date: "May 2025",
       description: "A role-based app for recruiters and applicants that matches résumés to job descriptions using semantic similarity, extracts key skills and sections from PDFs, and recommends skill-gap courses—cutting manual screening effort by 60%.",
       stack: ["Python", "Flask", "SQLite", "OpenAI API", "HTML5", "CSS", "JavaScript"],
-      github: "https://github.com/Ankit-8881",
-      live: "#",
+      github: "https://github.com/Ankit-8881/ResuMate",
+      live: "https://github.com/Ankit-8881/ResuMate",
       thumbnail: "assets/resumate.png",
       color: "green"
     }
@@ -98,7 +98,7 @@ const portfolioData = {
   // a "Certificate coming soon" placeholder shows instead, same as the projects thumbnails.
   certifications: [
     { title: "Google Cloud Data Analytics", issuer: "Google Cloud", skill: "Data Analytics", description: "Covered data pipelines, BigQuery, and building dashboards for cloud-based analytics workflows.", image: "assets/google_cloud.png", link: "https://www.credly.com/badges/c4d2cd45-701e-44d0-a550-d7e53c0b095f/public_url" },
-    { title: "DSA with C++", issuer: "Campus Connection", skill: "Data Structures & Algorithms", description: "Structured practice in arrays, trees, graphs, and complexity analysis using C++.", image: "" },
+    { title: "DSA with C++", issuer: "Campus Connection", skill: "Data Structures & Algorithms", description: "Structured practice in arrays, trees, graphs, and complexity analysis using C++.", image: "assets/dsa_cpp.jpg.", link: 'assets/dsa_cpp.jpg' },
     { title: "Java Deep Diving", issuer: "Udemy", skill: "Java", description: "In-depth Java fundamentals: OOP concepts, collections, and exception handling.", image: "assets/Udemy_Java.png" , link: "https://www.udemy.com/certificate/UC-58d97e8d-5812-4092-a771-53fe47e28e38/" },
     { title: "Data Analytics Virtual Job Simulation", issuer: "Deloitte Australia (Forage)", skill: "Business Analytics", description: "A simulated consulting engagement covering data classification and forensic technology analysis.", image: "assets/deloitte_forage.png" ,link: "https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_o76Brdbu3ryuS7CWo_1750166249342_completion_certificate.pdf"},
     { title: "SAP Business Data Cloud", issuer: "SAP · Course Completion", skill: "Cloud & ERP Analytics", description: "Introduction to SAP's cloud data platform for integrating and analyzing enterprise business data.", image: "assets/sap_buss.png" ,link: "https://badger.learning.sap.com/verify/xanyp-cedaf-poduf-temyg-pacel"},
