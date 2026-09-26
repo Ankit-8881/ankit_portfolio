@@ -1,11 +1,11 @@
 :root {
-    --bg:#0b1020;
+    --bg:#151267;
     --surface:#121a30;
     --surface-soft:#18223d;
     --text:#f4f6fb;
     --muted:#aab4ca;
     --line:rgba(202,214,242,.14);
-    --accent:#8b7bff;
+    --accent:#2fe654;
     --accent-2:#56d7b9;
     --serif:Georgia, serif;
 }
@@ -34,7 +34,7 @@ body {
     --text:rgb(0, 0, 0);
     --muted:#565b82;
     --line:rgba(43,42,110,.16);
-    --accent:#6656dc;
+    --accent:#a240f2;
     --accent-2:#3f6fd6;
 }
 .container {
@@ -103,6 +103,10 @@ html.intro-active body {
     overflow:hidden;
 }
 
+html.intro-active .brand {
+    visibility:hidden;
+}
+
 .intro-overlay {
     position:fixed;
     inset:0;
@@ -110,7 +114,7 @@ html.intro-active body {
     display:grid;
     place-items:center;
     overflow:hidden;
-    background:#0b1020;
+    background:#0e0645;
     isolation:isolate;
 }
 
@@ -163,6 +167,7 @@ html.intro-active body {
    independently while the stem remains a real alphabetic character. */
 .intro-i {
     position:relative;
+    z-index:21;
     width:.43em;
     height:1em;
     margin-left:.005em;

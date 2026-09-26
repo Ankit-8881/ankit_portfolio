@@ -1,6 +1,6 @@
 /* Experience timeline: each card stays readable as a standalone achievement. */
 .experience-section {
-  background: var(--surface);
+  background: var(--bg);
 }
 
 .experience-grid {
@@ -14,7 +14,7 @@
   padding: 32px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: var(--bg);
+  background: var(--surface);
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
