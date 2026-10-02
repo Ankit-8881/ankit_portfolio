@@ -207,7 +207,7 @@ chatForm.addEventListener("submit", async (event) => {
     const typingBubble = addTypingIndicator();
 
     try {
-        const response = await fetch("https://ankit-portfolio-6akt.vercel.app/ahttps://ankit-portfolio-rgbi-5npq279s5-ankit-e6e2.vercel.app/api/chatpi/chat", {
+        const response = await fetch("https://ankit-portfolio-rgbi-5npq279s5-ankit-e6e2.vercel.app/api/chatpi/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
