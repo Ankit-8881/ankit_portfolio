@@ -100,10 +100,10 @@ ${message}
         });
 
     } catch (error) {
-        console.error("Gemini API Error:", error);
+    console.error("Gemini API Error:", error);
 
-        return res.status(500).json({
-            error: error.message || "Something went wrong"
-        });
-    }
+    return res.status(500).json({
+        error: error.message || "Something went wrong"
+    });
+}
 };
