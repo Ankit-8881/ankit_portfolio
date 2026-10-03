@@ -34,7 +34,8 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-
+console.log("BODY TYPE:", typeof req.body);
+console.log("BODY:", req.body);
         // Vercel normally parses JSON automatically.
         // Handle both parsed objects and raw strings.
         let body = req.body;
