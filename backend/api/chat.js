@@ -35,7 +35,19 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        const { message, history, portfolio } = req.body || {};
+        let body = req.body;
+
+if (typeof body === "string") {
+    try {
+        body = JSON.parse(body);
+    } catch (error) {
+        return res.status(400).json({
+            error: "Invalid JSON"
+        });
+    }
+}
+
+const { message, history, portfolio } = body || {};
 
         if (!message || !message.trim()) {
             return res.status(400).json({
