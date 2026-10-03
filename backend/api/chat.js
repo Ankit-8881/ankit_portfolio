@@ -19,7 +19,6 @@ Keep answers concise and professional.
 
 module.exports = async function handler(req, res) {
 
-    // CORS
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -35,19 +34,7 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        let body = req.body;
-
-if (typeof body === "string") {
-    try {
-        body = JSON.parse(body);
-    } catch (error) {
-        return res.status(400).json({
-            error: "Invalid JSON"
-        });
-    }
-}
-
-const { message, history, portfolio } = body || {};
+        const { message, history = [], portfolio } = req.body;
 
         if (!message || !message.trim()) {
             return res.status(400).json({
@@ -86,9 +73,8 @@ const { message, history, portfolio } = body || {};
             ...previousMessages,
             {
                 role: "user",
-                parts: [
-                    {
-                        text: `
+                parts: [{
+                    text: `
 PORTFOLIO DATA:
 
 ${portfolioContext}
@@ -97,16 +83,15 @@ CURRENT USER QUESTION:
 
 ${message}
 `
-                    }
-                ]
+                }]
             }
         ];
 
         const response = await ai.models.generateContent({
             model: "gemini-3.1-flash-lite",
-            contents,
+            contents: contents,
             config: {
-                systemInstruction
+                systemInstruction: systemInstruction
             }
         });
 
@@ -115,7 +100,6 @@ ${message}
         });
 
     } catch (error) {
-
         console.error("Gemini API Error:", error);
 
         return res.status(500).json({
