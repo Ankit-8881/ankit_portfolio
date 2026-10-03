@@ -34,7 +34,32 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        const { message, history = [], portfolio } = req.body;
+
+        // Vercel normally parses JSON automatically.
+        // Handle both parsed objects and raw strings.
+        let body = req.body;
+
+        if (!body) {
+            return res.status(400).json({
+                error: "Request body is empty"
+            });
+        }
+
+        if (typeof body === "string") {
+            try {
+                body = JSON.parse(body);
+            } catch (e) {
+                console.log("Raw body:", body);
+
+                return res.status(400).json({
+                    error: "Invalid JSON received by server"
+                });
+            }
+        }
+
+        const message = body.message;
+        const history = body.history || [];
+        const portfolio = body.portfolio;
 
         if (!message || !message.trim()) {
             return res.status(400).json({
@@ -89,9 +114,9 @@ ${message}
 
         const response = await ai.models.generateContent({
             model: "gemini-3.1-flash-lite",
-            contents: contents,
+            contents,
             config: {
-                systemInstruction: systemInstruction
+                systemInstruction
             }
         });
 
@@ -100,10 +125,11 @@ ${message}
         });
 
     } catch (error) {
-    console.error("Gemini API Error:", error);
 
-    return res.status(500).json({
-        error: error.message || "Something went wrong"
-    });
-}
+        console.error("Backend error:", error);
+
+        return res.status(500).json({
+            error: error.message || String(error)
+        });
+    }
 };
