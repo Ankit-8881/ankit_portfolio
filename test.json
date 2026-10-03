@@ -1,8 +1,1 @@
-﻿{
-  "message": "Hello",
-  "history": [],
-  "portfolio": {
-    "name": "Ankit",
-    "role": "Computer Science Student & Developer"
-  }
-}
+{"message":"Hello","history":[],"portfolio":{"name":"Ankit","role":"Computer Science Student & Developer"}}
